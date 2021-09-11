@@ -1,0 +1,10 @@
+
+build*/
+doc/
+
+GRPolyRen
+GenLookupTable
+OfflineRen
+
+*.ini
+*.dat
