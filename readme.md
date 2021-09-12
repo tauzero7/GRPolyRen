@@ -31,24 +31,33 @@ in the source code.
 To compile the code, you also need    
 * cmake 3.15 or higher  
     https://cmake.org/
-* gcc or Visual Studio (with c++11 support)
+* gcc (Linux) or Visual Studio (Windows) with c++11 support
 
 
 ## Installation
+### Linux
 * Generate build folder
 * Switch to build folder and run "cmake .." or open cmake-gui
-* Set 'CMAKE_BUILD_TYPE' to either "Debug" or "Release" (linux only)
+* Set 'CMAKE_BUILD_TYPE' to either "Debug" or "Release"
 * Run configure / generate
-* Linux: compile the code using 'make'  
-  Windows: open solution file with Visual Studio and compile
+* Compile the code using 'make'  
 
+### Windows
+* Open 'CMakeLists.txt' with 'cmake-gui'
+* Set path to source code to, e.g., "E:/projects/GRPolyRen" and build path to "E:/projects/GRPolyRen/build"
+* Run 'Configure' and select 'x64' as optional platform; click 'finish'
+* Run 'Configure' a second time and click 'Generate'
+* Click 'Open Project' to open the project within Visual Studio.
+* Build solution
 
-## Compile your own lookup table
+If you compile 'GRPolyRen' from source, you have to generate a lookup table by running 'GenLookupTable'. By default, a lookup table with a low resolution will be calculated. For a higher resolution, read the next section.
+
+## Generate your own lookup table
 * Open "genlookup/main.cpp" and scroll down to "main" function.
 * Adapt the resolution in radial (Nr) and azimuthal (Nphi) direction.
 * Adapt a minimum (rmin) and maximum (rmax) radius value, and set the observer position (rInit).
 * Recompile the code and run it... 
-* Do not forget to adapt "lutFilename" within "src/main.cpp" to use the new lookup table.
+* Do not forget to adapt "lutFilename" within "src/main.cpp" and recompile the sources to use the new lookup table.
  
 
 ## Quick How-To
