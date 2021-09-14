@@ -195,7 +195,7 @@ set(zip_files
     $<TARGET_FILE:GRPolyRen>
     $<TARGET_FILE:OfflineRen>
     "${CMAKE_CURRENT_SOURCE_DIR}/readme.md")
-set(lut_file "${CMAKE_CURRENT_SOURCE_DIR}/lut_r40_256x512.dat")
+set(lut_file "${CMAKE_CURRENT_SOURCE_DIR}/lut_r40_32x64.dat")
 if(EXISTS ${lut_file})
     list(APPEND zip_files ${lut_file})
 else()
@@ -209,8 +209,10 @@ add_custom_target(ZipIt
     COMMAND ${CMAKE_COMMAND} -E copy 
         ${zip_files}
         "${CMAKE_CURRENT_BINARY_DIR}/Ziporello/"
+	COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        "${CMAKE_CURRENT_SOURCE_DIR}/shader" "${CMAKE_CURRENT_BINARY_DIR}/Ziporello/shader"
     COMMAND ${CMAKE_COMMAND} -E copy_directory 
-        "${CMAKE_CURRENT_SOURCE_DIR}/examples" "${CMAKE_CURRENT_BINARY_DIR}/Ziporello/examples/"
+        "${CMAKE_CURRENT_SOURCE_DIR}/examples" "${CMAKE_CURRENT_BINARY_DIR}/Ziporello/examples"
     COMMAND ${CMAKE_COMMAND} -E copy_directory 
         "${CMAKE_CURRENT_SOURCE_DIR}/objects" "${CMAKE_CURRENT_BINARY_DIR}/Ziporello/objects"
     COMMENT "Packaging files...")
