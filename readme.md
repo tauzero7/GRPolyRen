@@ -1,73 +1,85 @@
 # GRPolyRen
 
-GRPolyRen is a demo implementation of the general-relativistic polygon rendering
-method proposed in the paper 
+GRPolyRen is a demo implementation of the general-relativistic polygon rendering method proposed in:
 
+**Adaptive polygon rendering for interactive visualization in the Schwarzschild spacetime**  
 T. Müller, C. Schultz, and D. Weiskopf  
- __Adaptive polygon rendering for interactive visualization in the Schwarzschild spacetime__  
-European Journal of Physics vol, page (202?)  
-DOI: ...
+European Journal of Physics, vol. 0, no. 0, pp. 0-0, 202?  
+doi: ...
 
+```BibTeX
+@article{muller2021adaptive,
+    author={M{\"u}ller, Thomas
+    and Schulz, Christoph
+    and Weiskopf, Daniel},
+    title={Adaptive polygon rendering for interactive visualization in the {Schwarzschild} spacetime},
+    journal={European Journal of Physics},
+    year={202?},
+    volume={0},
+    number={0},
+    pages={0--0},
+    doi={},
+    url={}
+}
+```
 
 ## Download
-The source code and a precompiled version for Windows10 from github: 
+
+Precompiled binaries and source code are available from:
 [github.com/tauzero7/GRPolyRen](https://github.com/tauzero7/GRPolyRen)
 
-## Dependencies
-The code depends on the following external libraries which are already included 
-in the source code.
-
-* glad  (OpenGL multi-language loader)  
-    https://glad.dav1d.de/
-* glfw  (API for creating windows, contexts and surfaces, receiving input and events)  
-    https://www.glfw.org
-* glm  (C++ mathematics library for graphics software)  
-    https://github.com/g-truc/glm
-* imgui  (Graphical user interface library for c++)  
-    https://github.com/ocornut/imgui    
-* lua  (scripting language)  
-    http://www.lua.org/home.html
-
-To compile the code, you also need    
-* cmake 3.15 or higher  
-    https://cmake.org/
-* gcc (Linux) or Visual Studio (Windows) with c++11 support
-
-
 ## Installation
+
+When using prebuild binaries skip to [quick how-to](#quick-how-to).
+
+If you compile from source code, you have to generate a lookup table. See [generating lookup tables](#generating-lookup-tables) below.
+
+### Prerequisites
+
+To compile the code, you need:   
+* CMake 3.15 or higher  
+    https://cmake.org/
+* A C++11 compiler
+  * gcc (Linux) 
+  * MSVC (Windows)
+
 ### Linux
+
 * Generate build folder
-* Switch to build folder and run "cmake .." or open cmake-gui
-* Set 'CMAKE_BUILD_TYPE' to either "Debug" or "Release"
-* Run configure / generate
-* Compile the code using 'make'  
+* Switch to build folder and run `cmake ..` or open `cmake-gui`
+* Set `CMAKE_BUILD_TYPE` to either `Debug` or `Release`
+* Configure and generate the project
+* Compile the code using `make`
 
 ### Windows
-* Open 'CMakeLists.txt' with 'cmake-gui'
-* Set path to source code to, e.g., "E:/projects/GRPolyRen" and build path to "E:/projects/GRPolyRen/build"
-* Run 'Configure' and select 'x64' as optional platform; click 'finish'
-* Run 'Configure' a second time and click 'Generate'
-* Click 'Open Project' to open the project within Visual Studio.
-* Build solution
 
-If you compile 'GRPolyRen' from source, you have to generate a lookup table by running 'GenLookupTable'. By default, a lookup table with a low resolution will be calculated. For a higher resolution, read the next section.
+* Open `CMakeLists.txt` using the CMake GUI
+* Set the source code path to, e.g., `E:/projects/GRPolyRen` and build the path to `E:/projects/GRPolyRen/build`
+* Click 'Configure' (usually default settings are fine)
+* Click 'Generate'
+* Click 'Open Project' to open the project within Visual Studio
+* Select `Release` and `x64` from the dropdown in the toolbar
+* Build the entire solution, except for the `ZipIt` target
 
-## Generate your own lookup table
-* Open "genlookup/main.cpp" and scroll down to "main" function.
-* Adapt the resolution in radial (Nr) and azimuthal (Nphi) direction.
-* Adapt a minimum (rmin) and maximum (rmax) radius value, and set the observer position (rInit).
+## Generating lookup tables
+
+By default, a lookup table with a low resolution will be computed when running `GenLookupTable`. To customize settings:
+
+* Open `genlookup/main.cpp` and scroll down to the `main` function.
+* Adjust the resolution in radial (Nr) and azimuthal (Nphi) direction.
+* Adjust a minimum (rmin) and maximum (rmax) radius value, and set the observer position (rInit).
 * Recompile the code and run it... 
-* Do not forget to adapt "lutFilename" within "src/main.cpp" and recompile the sources to use the new lookup table.
+* Do not forget to adapt `lutFilename` within `src/main.cpp` and recompile the sources to use the new lookup table.
  
-
 ## Quick How-To
-* Run ./GRPolyRen from a command console or double click on it (windows only).
-  Note that the LUT is calculated for an observer at r_obs = 40. Thus, the 
-  camera has to be at "position = (40, 0, 0)" in order to show what an observer
-  at that position would actually see.
+
+* Run ./GRPolyRen from a command console or double click on it (Windows only).
+  Note that the LUT is calculated for an observer at `r_obs = 40`. Thus, the 
+  camera has to be at `position = (40, 0, 0)` in order to show what an observer
+  at that position would see.
 
 * Load a mesh object:  
-    Click on 'Load Files' and select 'examples/run_sphere.lua'.
+    Click on 'Load Files' and select `examples/run_sphere.lua`.
     (You might have to resize the window)   
 
     The mesh object is a colored sphere which is located directly behind the 
@@ -77,7 +89,8 @@ If you compile 'GRPolyRen' from source, you have to generate a lookup table by r
   pressed, move the object in the yz-plane behind the black hole and see how the
   object is apparently distorted by the black hole.
 
-## Keyboard Shortcuts:
+## Keyboard Shortcuts
+
 - __Esc :__     Quit program
 - __1 :__       Flat view mode
 - __2 :__       GR view mode
@@ -85,12 +98,12 @@ If you compile 'GRPolyRen' from source, you have to generate a lookup table by r
 - __4 :__       GRtess view mode
 - __b :__       toggle black hole visibility
 - __c :__       set mouse control to 'camera'
-- __j :__       increase euler angle alpha
-- __shift-j :__ decrease euler angle alpha
-- __k :__       increase euler angle beta
-- __shift-k :__ decrease euler angle beta
-- __l :__       increase euler angle gamma
-- __shift-l :__ decrease euler angle gamma
+- __j :__       increase Euler angle alpha
+- __shift-j :__ decrease Euler angle alpha
+- __k :__       increase Euler angle beta
+- __shift-k :__ decrease Euler angle beta
+- __l :__       increase Euler angle gamma
+- __shift-l :__ decrease Euler angle gamma
 - __o :__       set mouse control to 'object'
 - __t :__       toggle crosshairs visibility
 - __w :__       toggle wireframe
@@ -104,8 +117,9 @@ If you compile 'GRPolyRen' from source, you have to generate a lookup table by r
 - __left-arrow :__   rotate object around black hole (negatively)
 
 ## User Interface
+
 * __Load Files__  
-    You can either load a lua script or an object file or a settings file.
+    You can either load a Lua script or an object file or a settings file.
 
 * __Mouse__  
     The mouse can handle either the object or the camera.  
@@ -119,33 +133,33 @@ If you compile 'GRPolyRen' from source, you have to generate a lookup table by r
     or by pressing Ctrl+LMB.
 
 * __Object__  
-    The object position can be modified using 'trans'. 'trans = (0,0,0)' 
-    means that the origin of the object is at the center of the black hole. 
-    The size of the object can be modified using 'scale'. 
+    The object position can be modified using, e.g., `trans = (0,0,0)` for setting
+    the origin of the object to the center of the black hole. 
+    The size of the object can be modified using `scale`. 
     It is also possible to rotate the object using Euler angles. The order 
-    of the angles is defined by 'euler-order'. 
+    of the angles is defined by `euler-order`. 
     In the demo implementation, every object has a checkerboard texture. 
-    The frequency of the texture is defined by 'patFreq'.
+    The frequency of the texture is defined by `patFreq`.
     An object can also rotate around the black hole on a circular orbit with the
-    currently set distance. Here, 'orbit-rotate' defines an angular velocity.
+    currently set distance. Here, `orbit-rotate` defines an angular velocity.
 
 * __BlackHole__  
     The black hole is represented by a sphere. However, this sphere does not
     undergo transformation by means of the polygon rendering method. Hence, 
-    the apparent size must be set manually. A value of "5.05" represents the
-    size of the shadow of the black hole as seen by an observer at r_obs = 40.
+    the apparent size must be set manually. A value of `5.05` represents the
+    size of the shadow of the black hole as seen by an observer at `r_obs = 40`.
 
 * __View__  
     The view mode can be 
-    - 'flat': no distortion
-    - 'GR': gr polygon-rendering without subdivision
-    - 'GRgeom': gr polygon-rendering without subdivision
-    - 'GRtess': gr polygon-rendering with subdivision
+    - `flat`: no distortion
+    - `GR`: gr polygon-rendering without subdivision
+    - `GRgeom`: gr polygon-rendering without subdivision
+    - `GRtess`: gr polygon-rendering with subdivision
 
 * __LightSource__  
     The position of the light source can be set using the spherical 
-    angles 'theta' and 'phi' in degree. 'theta' is the colatitude 
-    angle measured from the z-axis and 'phi' is the azimuth angle. 
+    angles `theta` and `phi` in degree. `theta` is the colatitude 
+    angle measured from the z-axis. `phi` is the azimuth angle. 
     The distance is always equal to the actual observer.
 
 * __Background__  
@@ -154,15 +168,16 @@ If you compile 'GRPolyRen' from source, you have to generate a lookup table by r
 
 * __other__  
     'Save current state': The current state of all parameters are saved 
-    in 'setting.cfg'.
+    in `setting.cfg`.
 
 ## Lua Scripting
-Colors are given as r,g,b[,a] = red, green, blue[, alpha] values in the 
-range [0,1]. Boolean values can be either 'true' or 'false'.
+
+Color parameters are given as `r,g,b[,a]` tuples, i.e., red, green, blue, and alpha values between `0.0` and `1.0`.
+Enabled parameters can be either `true` or `false`.
 
 * OBJ mesh loading  
 
-        loadObject(filename)
+        loadObject("filename")
 
 * Camera position and point of interest in pseudo-Cartesian coordinates;
   the camera's field of view is given in degrees
@@ -172,37 +187,37 @@ range [0,1]. Boolean values can be either 'true' or 'false'.
         setCamFoV(fov)
 
 * Object position and scaling via pseudo-Cartesian coordinates; the object
-  texture can be either 'disk', 'sphere' or 'triangle; the checkerboard
-  pattern can be influenced by the pattern frequency; euler rotation angles
-  (degree) and order: "z_xs_zss", "z_ys_zss", "z_ys_xss":
+  texture can be either `disk`, `sphere` or `triangle`; the checkerboard
+  pattern can be influenced by the pattern frequency; Euler rotation angles
+  (degree) and order: `z_xs_zss`, `z_ys_zss`, `z_ys_xss`:
 
         setObjTrans(x, y, z)
         setObjScale(x, y, z)
-        setObjTexture(name)
+        setObjTexture("name")
         
-        setPatFreq(fx, fy);
-        setEulerRot(alpha, beta, gamma);
-        setEulerOrder(name);
+        setPatFreq(fx, fy)
+        setEulerRot(alpha, beta, gamma)
+        setEulerOrder("name")
 
 * Black hole
 
         setBlackHoleRadius(radius)
         setBlackHoleColor(r, g, b, a)
-        SetBlackHoleFlatShading(bool)
+        SetBlackHoleFlatShading(enabled)
 
 * Background  
 
         setClearColor(r, g, b)
 
-* View mode ("Flat", "GR", "GRgeom", "GRtess")
+* View mode (`Flat`, `GR`, `GRgeom`, `GRtess`)
 
-        setViewMode(name)
+        setViewMode("name")
         setTessFactor(factor)
         setMaxTessLevel(mtl)
 
 * Light source (theta and phi in degrees)
 
-        setLightSourceActive(bool)
+        setLightSourceActive(enabled)
         setLightSourcePos(theta, phi)
         setLightSourceFactor(factor)
 
@@ -219,10 +234,25 @@ range [0,1]. Boolean values can be either 'true' or 'false'.
 * render and save
 
         renderImage()
-        saveImage(filename)
+        saveImage("filename")
 
+## Dependencies
+
+You do not have to install external dependencies, since they are embedded into the project. We use the following libraries:
+
+* glad  (OpenGL multi-language loader)  
+    https://glad.dav1d.de/
+* glfw  (API for creating windows, contexts, and surfaces, receiving input and events)  
+    https://www.glfw.org
+* glm  (C++ mathematics library for graphics software)  
+    https://github.com/g-truc/glm
+* imgui  (Graphical user interface library for c++)  
+    https://github.com/ocornut/imgui    
+* Lua  (scripting language)  
+    http://www.lua.org/home.html
 
 ## Contact
+
 Dr. Thomas Müller  
 Max Planck Institute for Astronomy  
 Heidelberg, Germany  
